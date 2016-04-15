@@ -1,0 +1,68 @@
+#imath-upgrader-tasks {
+	background: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+	box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task {
+	list-style: none;
+	margin: 0;
+	padding: 1em 0.4em;
+}
+#imath-upgrader-tasks li:not(:first-child) {
+ 	border-top: dotted 1px #f1f1f1;
+}
+
+#message.imath-upgrader-hide {
+	display:none;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task .task-description {
+ 	text-align: left;
+    line-height: 1.3em;
+    font-size: 14px;
+    padding: 0.4em;
+    color: #aaa;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task.active .task-description {
+	color: #555;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task .imath-upgrader-progress {
+	background: none;
+	border: 1px solid #d1d1d1;
+	height: 5px;
+	margin: 0 auto;
+	margin-bottom: 2px;
+	padding: 0;
+	overflow: hidden;
+	width: 98%;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task .imath-upgrader-progress.warning,
+#imath-upgrader-tasks li.imath-upgrader-task .imath-upgrader-progress.error {
+	height: auto;
+	padding: 10px;
+	font-weight: bold;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task .imath-upgrader-progress.error {
+	background-color: #fdc;
+	border-color: #a00;
+	color: #800;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task .imath-upgrader-progress.warning {
+	background-color: #ffd;
+	border-color: #cb2;
+	color: #440;
+}
+
+#imath-upgrader-tasks li.imath-upgrader-task .imath-upgrader-bar {
+	background-color: #0073aa;
+	width: 0;
+	height: 100%;
+	z-index: 9;
+}
