@@ -28,7 +28,7 @@ class Imath_Upgrader {
 	 */
 	private function __construct() {
 		$this->setup_globals();
-		$this->setup_upgrader_screen();
+		$this->setup_actions();
 	}
 
 	/**
@@ -49,7 +49,6 @@ class Imath_Upgrader {
 	private function setup_globals() {
 
 		$this->version       = '1.0.0';
-		$this->domain        = 'imath-upgrader';
 
 		/** Paths ***********************************************/
 
@@ -58,9 +57,6 @@ class Imath_Upgrader {
 
 		// Define a global that we can use to construct file paths throughout the component
 		$this->plugin_dir    = plugin_dir_path( $this->file );
-
-		// Define a global that we can use to construct file paths starting from the includes directory
-		$this->lang_dir      = trailingslashit( $this->plugin_dir . 'languages' );
 
 		// Define the plugin url
 		$this->plugin_url    = plugin_dir_url( $this->file );
@@ -74,10 +70,21 @@ class Imath_Upgrader {
 		$this->items = array();
 	}
 
+	private function setup_actions() {
+		// Textdomain
+		add_action( 'init', array( $this, 'load_textdomain' ) );
+
+		// Admin page
+		add_action( 'admin_menu', array( $this, 'setup_upgrader_screen' ), 100 );
+
+		// Ajax Action.
+		add_action( 'wp_ajax_imath_upgrader', array( $this, 'do_upgrade_task' ) );
+	}
+
 	/**
 	 * Setup the Upgrader screen if needed.
 	 */ 
-	private function setup_upgrader_screen() {
+	public function setup_upgrader_screen() {
 		$items       = $this->get_tasks();
 		$this->tasks = array();
 
@@ -161,7 +168,7 @@ class Imath_Upgrader {
 		}
 
 		printf( '<div id="message" class="fade error"><p>%1$s %2$s</p></div>',
-			sprintf( _n( '%s item needs to perform an upgrade.', '%s items need to perform an upgrade.', count( $this->tasks ), 'thaim' ), count( $this->tasks ) ),
+			sprintf( _n( '%s item needs to perform an upgrade.', '%s items need to perform an upgrade.', count( $this->tasks ), 'imath-upgrader' ), count( $this->tasks ) ),
 			sprintf( __( 'Make sure to backup your database before lauching <a href="%s">the upgrader</a>.', 'imath-upgrader' ), esc_url( add_query_arg( 'page', 'imath-upgrader', admin_url( 'index.php' ) ) ) )
 		);
 	}
@@ -232,7 +239,7 @@ class Imath_Upgrader {
 		<?php
 	}
 
-	public static function do_upgrade_task() {
+	public function do_upgrade_task() {
 		$error = array(
 			'message'   => __( 'The task could not process due to an error', 'imath-upgrader' ),
 			'type'      => 'error'
@@ -263,11 +270,6 @@ class Imath_Upgrader {
 
 		$did = call_user_func_array( $callback, array( $number ) );
 
-			/* This shouldn't happen..
-			if ( 0 === $did && ( (int) $_POST['count'] > ( (int) $_POST['done'] + (int) $did ) ) ) {
-				wp_send_json_error( array( 'message' => __( '%d item(s) could not be updated', 'buddydrive' ), 'type' => 'warning', 'action_id' => $_POST['id'] ) );
-			}*/
-
 		wp_send_json_success( array( 'done' => $did, 'callback' => $callback ) );
 	}
 
@@ -277,24 +279,27 @@ class Imath_Upgrader {
 		 *
 		 * @param array $value list of tasks to perform
 		 *
-		 * eg array( $plugin => array(
-		 * 	$version => array(
-		 * 		$type      Is it a plugin or a theme ?
-		 * 		$action_id The unique identifier of the upgrade action
-		 *		$count     The number of items to upgrade
-		 *		$message   The feedback message
-		 *		$number    The number of items for each request
-		 *		$callback  The function to perform
+		 * eg array( $plugin_or_theme_name => array(
+		 * 		$type        string Is it a plugin or a theme ?
+		 * 		$db_version  string The current database version (before the upgrade)
+		 *		$tasks array (
+		 * 			$callback  string The Upgrade routine
+		 *			$count     int    The total number of items to upgrade
+		 *			$message   string The message to display in the progress bar
+		 *			$number    int    Number of items to upgrade per ajax request,
+		 *      )
 		 * ) )
 		 *
 		 */
 		return (array) apply_filters( 'imath_upgrader_tasks', array() );
+	}
+
+	public function load_textdomain() {
+		load_plugin_textdomain( 'imath-upgrader', false, trailingslashit( basename( $this->plugin_dir ) ) . 'languages' );
 	}
 }
 
 function imath_upgrader() {
 	return Imath_Upgrader::start();
 }
-add_action( 'admin_menu', 'imath_upgrader', 100 );
-
-add_action( 'wp_ajax_imath_upgrader', array( 'Imath_Upgrader', 'do_upgrade_task' ) );
+add_action( 'plugins_loaded', 'imath_upgrader' );

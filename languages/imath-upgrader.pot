@@ -1,0 +1,61 @@
+# Copyright (C) 2016 imath Upgrader
+# This file is distributed under the same license as the imath Upgrader package.
+msgid ""
+msgstr ""
+"Project-Id-Version: imath Upgrader 1.0.0-alpha\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/imath-upgrader\n"
+"POT-Creation-Date: 2016-04-15 11:46:24+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-04-15 13:53+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: imath-upgrader.php:123 imath-upgrader.php:124 imath-upgrader.php:202
+msgid "Database Upgrade"
+msgstr "Mise à jour de la base de données"
+
+#: imath-upgrader.php:160
+msgid "%s item needs to perform an upgrade."
+msgid_plural "%s items need to perform an upgrade."
+msgstr[0] "%s élément nécessite une mise à jour."
+msgstr[1] "%s éléments nécessitent une mise à jour."
+
+#: imath-upgrader.php:161
+msgid ""
+"Make sure to backup your database before lauching <a href=\"%s\">the "
+"upgrader</a>."
+msgstr ""
+"Veiller à sauvegarder votre base de données avant de lancer <a href=\"%s"
+"\">le gestionnaire de mises à jour</a>."
+
+#: imath-upgrader.php:204
+msgid "Thank you for your patience, your website is upgraded!"
+msgstr "Merci de votre patience, votre site a été mis à jour !"
+
+#: imath-upgrader.php:233
+msgid "The task could not process due to an error"
+msgstr "La tâche n&#39;a pu être accomplie en raison d&#39;une erreur"
+
+#. Plugin Name of the plugin/theme
+msgid "imath Upgrader"
+msgstr "Gestionnaire de mises à jour d&#39;imath"
+
+#. Plugin URI of the plugin/theme
+msgid "http://imathi.eu/tag/thaim/"
+msgstr "http://imathi.eu/tag/thaim/"
+
+#. Description of the plugin/theme
+msgid "A utility plugin to run upgrade routines"
+msgstr "Un utilitaire pour accomplir des lots de tâches de mise à jour."
+
+#. Author of the plugin/theme
+msgid "imath"
+msgstr "imath"
+
+#. Author URI of the plugin/theme
+msgid "http://imathi.eu/"
+msgstr "http://imathi.eu/"
